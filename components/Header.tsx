@@ -5,7 +5,7 @@ import { FormEvent, useRef } from "react";
 
 function Header() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const handelSearch = (e: FormEvent<HTMLFormElement>) => {
+  const handelSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const input = inputRef.current?.value;
     if (!input) {
@@ -16,6 +16,13 @@ function Header() {
     }
     try {
       //Call out Api to activate the Scraper
+      const response = await fetch("/api/activateScraper", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ search: input }),
+      });
     } catch (error) {
       // Handle any error
     }
